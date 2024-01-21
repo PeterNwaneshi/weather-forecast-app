@@ -42,8 +42,8 @@ def get_weather_data(city):
         lon = response['coord']['lon']
 
         ### Getting hourly forecast data through weathermap API
-        hourly_url = f"https://api.openweathermap.org/data/2.5/forecast?lat={lat}&lon={lon}&appid={API_KEY}&cnt=24&units=metric"
-        response_hourly = requests.get(hourly_url).json()
+        HOURLY_URL = f"https://api.openweathermap.org/data/2.5/forecast?lat={lat}&lon={lon}&appid={API_KEY}&cnt=24&units=metric"
+        response_hourly = requests.get(HOURLY_URL).json()
 
         ### First Forecast Data
         wind_speed_0 = f"{response_hourly['list'][0]['wind']['speed']:.2f}m/s"
