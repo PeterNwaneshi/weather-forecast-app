@@ -201,4 +201,3 @@ def get_weather_data(city):
                  
                 }
         return items
-    
