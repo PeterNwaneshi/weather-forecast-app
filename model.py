@@ -8,6 +8,15 @@ from api_key import API_KEY # OpenWeatherMap API key
 
 # Creating function to get relevant data
 def get_weather_data(city):
+    """Used to extract weather data from two openweathermap APIs
+    
+    Keyword arguments:
+    Users are required to provide city name to enable extraction of weather information for the city location
+
+    Return: 
+    This function returns a dictionary of weather data
+    """
+    
     BASE_URL = f"https://api.openweathermap.org/data/2.5/weather?appid={API_KEY}&q={city}&units=metric" # API String
 
     response = requests.get(BASE_URL) # connect to API
