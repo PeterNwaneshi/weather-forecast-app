@@ -1,3 +1,4 @@
+# ---------- model.py -------------------
 # Basic imports
 import requests
 import datetime
@@ -11,7 +12,8 @@ def get_weather_data(city):
 
     response = requests.get(BASE_URL) # connect to API
     
-    if response.status_code == 200: # if the response goes through with success 
+    ## if the response goes through with success extract weather information
+    if response.status_code == 200: 
         response = requests.get(BASE_URL).json() # chosen json data type
         wind_speed = f"{response['wind']['speed']:.2f}m/s"
         wind_deg = f"{response['wind']['deg']:.2f}°"
@@ -26,13 +28,15 @@ def get_weather_data(city):
         weather_icon = response['weather'][0]['icon']
         search_city = response['name']
 
+        ### getting Latitude (lat) and Longitude (lon)
         lat = response['coord']['lat']
         lon = response['coord']['lon']
 
+        ### Getting hourly forecast data through weathermap API
         hourly_url = f"https://api.openweathermap.org/data/2.5/forecast?lat={lat}&lon={lon}&appid={API_KEY}&cnt=24&units=metric"
         response_hourly = requests.get(hourly_url).json()
 
-        # First Forecast Data
+        ### First Forecast Data
         wind_speed_0 = f"{response_hourly['list'][0]['wind']['speed']:.2f}m/s"
         wind_deg_0 = f"{response_hourly['list'][0]['wind']['deg']:.2f}°"
         try:
@@ -57,7 +61,7 @@ def get_weather_data(city):
         else:
             time_desc_0 = "Next"
         
-        # Second Forecast Data
+        ### Second Forecast Data
         wind_speed_8 = f"{response_hourly['list'][8]['wind']['speed']:.2f}m/s"
         wind_deg_8 = f"{response_hourly['list'][8]['wind']['deg']:.2f}°"
         try:
@@ -82,7 +86,7 @@ def get_weather_data(city):
             time_desc_8 = "Next"
         
 
-        # Third Forecast Data
+        ### Third Forecast Data
         wind_speed_16 = f"{response_hourly['list'][16]['wind']['speed']:.2f}m/s"
         wind_deg_16 = f"{response_hourly['list'][16]['wind']['deg']:.2f}°"
         try:
@@ -106,8 +110,9 @@ def get_weather_data(city):
             time_desc_16 = "Next"
         
 
-        # Storing all the data in a dictionary
-        items = {"speed":wind_speed,
+        ### Storing all the data in a dictionary
+        items = {
+                 "speed":wind_speed,
                  "deg":wind_deg,
                  "gust":wind_gust,
                  "humidity":humidity,
@@ -132,7 +137,8 @@ def get_weather_data(city):
                      "description":description_8, 
                      "icon":icon_8, 
                      "day":time_desc_8
-                 },{
+                 },
+                 {
                      "speed":wind_speed_16, 
                      "deg":wind_deg_16, 
                      "gust":wind_gust_16, 
@@ -146,7 +152,8 @@ def get_weather_data(city):
         
         return items
     else:
-        items = {"speed":None,
+        items = {
+                 "speed":None,
                  "deg":None,
                  "gust":None,
                  "humidity":None,
@@ -171,7 +178,8 @@ def get_weather_data(city):
                      "description":None, 
                      "icon":None, 
                      "day":None
-                 },{
+                 },
+                 {
                      "speed":None, 
                      "deg":None, 
                      "gust":None, 
