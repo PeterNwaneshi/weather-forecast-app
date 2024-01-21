@@ -21,6 +21,7 @@ def get_weather_data(city):
 
     response = requests.get(BASE_URL) # connect to API
     
+    
     ## if the response goes through with success extract weather information
     if response.status_code == 200: 
         response = requests.get(BASE_URL).json() # chosen json data type
@@ -45,6 +46,7 @@ def get_weather_data(city):
         HOURLY_URL = f"https://api.openweathermap.org/data/2.5/forecast?lat={lat}&lon={lon}&appid={API_KEY}&cnt=24&units=metric"
         response_hourly = requests.get(HOURLY_URL).json()
 
+
         ### First Forecast Data
         wind_speed_0 = f"{response_hourly['list'][0]['wind']['speed']:.2f}m/s"
         wind_deg_0 = f"{response_hourly['list'][0]['wind']['deg']:.2f}°"
@@ -62,7 +64,6 @@ def get_weather_data(city):
         time_t0 = date_0.strftime("%Y-%m-%d")
         next_t = now_0 + datetime.timedelta(days=1)
         
-
         if str(time_t0) == str(now_0):
             time_desc_0 = "Today"
         elif str(time_t0) == str(next_t):
@@ -70,6 +71,7 @@ def get_weather_data(city):
         else:
             time_desc_0 = "Next"
         
+
         ### Second Forecast Data
         wind_speed_8 = f"{response_hourly['list'][8]['wind']['speed']:.2f}m/s"
         wind_deg_8 = f"{response_hourly['list'][8]['wind']['deg']:.2f}°"
@@ -86,7 +88,6 @@ def get_weather_data(city):
         time_8 = date_8.strftime("%I:%M %p")
         time_t8 = date_8.strftime("%Y-%m-%d")
         
-
         if str(time_t8) == str(now_8):
             time_desc_8 = "Today"
         elif str(time_t8) == str(next_t):
