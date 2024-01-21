@@ -10,8 +10,9 @@ def get_weather_data(city):
     BASE_URL = f"https://api.openweathermap.org/data/2.5/weather?appid={API_KEY}&q={city}&units=metric" # API String
 
     response = requests.get(BASE_URL) # connect to API
-    
-    if response.status_code == 200: # if the response goes through with success 
+
+    # if the response goes through with success extract weather information
+    if response.status_code == 200: 
         response = requests.get(BASE_URL).json() # chosen json data type
         wind_speed = f"{response['wind']['speed']:.2f}m/s"
         wind_deg = f"{response['wind']['deg']:.2f}°"
@@ -28,7 +29,8 @@ def get_weather_data(city):
 
         lat = response['coord']['lat']
         lon = response['coord']['lon']
-
+        
+        # Getting hourly forecast through weathermap API
         hourly_url = f"https://api.openweathermap.org/data/2.5/forecast?lat={lat}&lon={lon}&appid={API_KEY}&cnt=24&units=metric"
         response_hourly = requests.get(hourly_url).json()
 
